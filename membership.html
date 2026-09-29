@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="sw"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="ML Christian Radio Membership Application Form"><title>Jiunge na Familia | ML Christian Radio</title><link rel="icon" href="logo.svg"><link rel="stylesheet" href="styles.css"></head><body class="membership-page">
+<header><div class="wrap nav"><a class="brand" href="index.html"><img src="logo.svg" alt="ML Christian Radio logo"><span><b>ML CHRISTIAN RADIO</b><small>HOME OF CHAMPIONS</small></span></a><a class="back" href="index.html">← Rudi Home</a></div></header>
+<section class="formHero"><div class="wrap"><img class="formLogo" src="logo.svg" alt="ML Christian Radio"><label>MEMBERSHIP APPLICATION</label><h1>Jiunge na Familia ya ML Christian Radio</h1><p>Jaza fomu hapa chini. Baada ya kubonyeza <b>Tuma Maombi</b>, taarifa zako zitatumwa moja kwa moja kupitia WhatsApp ya ML Christian Radio kwa ajili ya kufanyiwa mapitio.</p></div></section>
+<main class="formShell"><div class="notice"><b>Muhimu:</b> Thamani ya hisa ni TZS 10,000 kwa hisa. Uanachama na mchango wa hisa ni vitu tofauti kulingana na taratibu za kampuni.</div>
+<form id="membershipForm">
+<div class="formSection"><h2>A. APPLICANT DETAILS</h2></div>
+<div class="formGrid">
+<div class="field"><label>Full Name / Jina Kamili *</label><input name="name" required></div>
+<div class="field"><label>Date of Birth / Tarehe ya Kuzaliwa</label><input name="dob" type="date"></div>
+<div class="field"><label>Identification Number</label><input name="idno"></div>
+<div class="field"><label>Phone Number / Namba ya Simu *</label><input name="phone" required type="tel"></div>
+<div class="field"><label>Email Address</label><input name="email" type="email"></div>
+<div class="field"><label>Occupation / Business</label><input name="occupation"></div>
+<div class="field full"><label>Residential Address / Anuani ya Makazi</label><textarea name="address"></textarea></div>
+</div>
+<div class="formSection"><h2>B. MEMBERSHIP / SHARE APPLICATION</h2></div>
+<div class="formGrid">
+<div class="field"><label>Number of Shares Applied For *</label><input id="shares" name="shares" required type="number" min="0" step="1"></div>
+<div class="field"><label>Value per Share</label><input class="readonly" value="TZS 10,000" readonly></div>
+<div class="field"><label>Total Value of Shares</label><input class="readonly" id="total" name="total" value="0" readonly></div>
+<div class="field"><label>Amount Paid (TZS)</label><input id="paid" name="paid" type="number" min="0" step="1000" value="0"></div>
+<div class="field"><label>Amount Outstanding</label><input class="readonly" id="outstanding" name="outstanding" value="0" readonly></div>
+</div>
+<label class="check"><input id="agree" type="checkbox" required><span>Ninathibitisha kuwa taarifa nilizotoa ni za kweli na kamili kwa kadri ya ufahamu wangu, na nakubali kufuata Memorandum and Articles of Association, maamuzi halali ya kampuni na sheria zinazotumika.</span></label>
+<div class="formActions"><button class="btn gold" type="submit">📲 Tuma Maombi kwa WhatsApp</button><a class="btn outline" style="background:#10213a" href="index.html">Rudi Website</a></div>
+</form></main><footer><div class="wrap">© <span id="year"></span> ML Christian Media · Home of Champions</div></footer><script src="script.js"></script></body></html>
