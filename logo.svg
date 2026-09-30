@@ -1,29 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="ML Christian Radio Home of Champions logo">
-<defs>
- <radialGradient id="bg" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#123f78"/><stop offset=".65" stop-color="#06172b"/><stop offset="1" stop-color="#020913"/></radialGradient>
- <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#b77b0b"/><stop offset=".5" stop-color="#ffd85c"/><stop offset="1" stop-color="#d49a18"/></linearGradient>
- <filter id="shadow"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity=".45"/></filter>
-</defs>
-<circle cx="250" cy="250" r="238" fill="url(#gold)"/>
-<circle cx="250" cy="250" r="221" fill="url(#bg)" stroke="#fff1a0" stroke-width="3"/>
-<g opacity=".95">
- <path d="M92 165c45-67 120-100 193-91 54 7 103 32 140 73" fill="none" stroke="#1f76d2" stroke-width="10" opacity=".45"/>
- <path d="M118 183c33-54 92-83 151-78" fill="none" stroke="#48a2ff" stroke-width="5" opacity=".4"/>
-</g>
-<g filter="url(#shadow)">
- <rect x="285" y="120" width="142" height="62" rx="10" fill="#e51d25" stroke="#111" stroke-width="7"/>
- <text x="356" y="161" fill="#fff" font-family="Arial,sans-serif" font-size="35" font-weight="900" text-anchor="middle">ON AIR</text>
-</g>
-<g transform="rotate(-12 184 150)" fill="#20262d" stroke="#aeb5bd" stroke-width="4">
- <rect x="105" y="112" width="168" height="58" rx="29"/>
- <rect x="248" y="124" width="42" height="34" rx="15"/>
- <path d="M111 125l-31 16 31 17z"/>
- <path d="M139 112v58M159 108v66M179 106v70M199 108v66M219 112v58" opacity=".8"/>
-</g>
-<path d="M348 82c18 5 31 15 41 30M335 103c12 3 21 10 28 20M365 62c26 7 46 22 59 43" fill="none" stroke="#ffd33f" stroke-width="10" stroke-linecap="round"/>
-<text x="250" y="278" fill="url(#gold)" font-family="Arial,sans-serif" font-size="55" font-weight="900" text-anchor="middle">ML CHRISTIAN</text>
-<text x="250" y="335" fill="url(#gold)" font-family="Arial,sans-serif" font-size="68" font-weight="900" text-anchor="middle">RADIO</text>
-<g fill="#f7c62f"><rect x="88" y="292" width="8" height="45" rx="4"/><rect x="102" y="278" width="8" height="73" rx="4"/><rect x="116" y="289" width="8" height="51" rx="4"/><rect x="376" y="292" width="8" height="45" rx="4"/><rect x="390" y="278" width="8" height="73" rx="4"/><rect x="404" y="289" width="8" height="51" rx="4"/></g>
-<rect x="108" y="365" width="284" height="48" rx="24" fill="#061525" stroke="#f1b92d" stroke-width="4"/>
-<text x="250" y="398" fill="#fff" font-family="Arial,sans-serif" font-size="25" font-weight="800" text-anchor="middle">HOME OF CHAMPIONS</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="ML Christian Radio logo">
+<defs><radialGradient id="bg" cx="50%" cy="38%" r="72%"><stop offset="0" stop-color="#173f70"/><stop offset=".65" stop-color="#071a31"/><stop offset="1" stop-color="#020b16"/></radialGradient><linearGradient id="gold" x1="0" x2="1"><stop stop-color="#a96e0b"/><stop offset=".5" stop-color="#ffd95b"/><stop offset="1" stop-color="#d69b1c"/></linearGradient></defs>
+<circle cx="250" cy="250" r="238" fill="url(#gold)"/><circle cx="250" cy="250" r="220" fill="url(#bg)" stroke="#f7d45d" stroke-width="4"/>
+<path d="M260 115v210M205 165h110M210 165c-65 0-96 40-96 83s31 82 96 82h65c53 0 92-31 92-77s-39-78-92-78h-72" fill="none" stroke="url(#gold)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M130 334c27 24 57 36 92 36h52c34 0 62-11 84-32" fill="none" stroke="#fff" stroke-width="6" opacity=".85" stroke-linecap="round"/>
+<path d="M260 78v48" stroke="#fff" stroke-width="12" stroke-linecap="round"/><path d="M238 100h44" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+<text x="250" y="405" fill="#fff" font-family="Arial,sans-serif" font-size="28" font-weight="800" text-anchor="middle" letter-spacing="3">ML RADIO</text>
 </svg>
