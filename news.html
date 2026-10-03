@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Taarifa, habari na matangazo ya ML Christian Radio – Home of Champions kutoka Dar es Salaam, Tanzania.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://mwakapalilamedia-ops.github.io/ML-Christian-Radio--home-of-champions-/news.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Taarifa | ML Christian Radio – Home of Champions">
+<meta property="og:description" content="Habari, matangazo na taarifa mpya kutoka ML Christian Radio.">
+<meta property="og:url" content="https://mwakapalilamedia-ops.github.io/ML-Christian-Radio--home-of-champions-/news.html">
+<title>Taarifa | ML Christian Radio – Home of Champions</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<style>
+.newsHero{background:linear-gradient(110deg,#06182d,#0c2a4d);color:#fff;padding:70px 0}
+.newsHero h1{font-size:clamp(40px,6vw,68px);line-height:1.05;margin:8px 0}
+.newsHero p{color:#c6d2df;max-width:700px}
+.newsList{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.newsCard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px}
+.newsDate{color:#a97916;font-size:12px;font-weight:900;letter-spacing:.08em}
+.newsCard h2{margin:8px 0 10px;line-height:1.2}
+.newsCard p{color:var(--muted)}
+@media(max-width:700px){.newsList{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="logo.svg" alt="ML Christian Radio logo">
+      <span><b>ML CHRISTIAN RADIO</b><small>HOME OF CHAMPIONS</small></span>
+    </a>
+    <button class="menu" aria-label="Fungua menyu">☰</button>
+    <nav>
+      <a href="index.html">Nyumbani</a>
+      <a href="index.html#about">Kuhusu Sisi</a>
+      <a href="index.html#programs">Huduma Zetu</a>
+      <a href="news.html">Taarifa</a>
+      <a href="index.html#listen">Listen Live</a>
+      <a href="index.html#contact">Mawasiliano</a>
+      <a class="navJoin" href="index.html">Jiunge</a>
+    </nav>
+  </div>
+</header>
+
+<section class="newsHero">
+  <div class="wrap">
+    <label>ML CHRISTIAN RADIO</label>
+    <h1>Taarifa & Habari</h1>
+    <p>Karibu kwenye ukurasa rasmi wa taarifa wa ML Christian Radio – Home of Champions. Hapa tutaweka matangazo, habari za radio, vipindi, matukio, ushirikiano na taarifa nyingine muhimu.</p>
+  </div>
+</section>
+
+<main class="section cream">
+  <div class="wrap">
+    <label>TAARIFA MPYA</label>
+    <h2>Habari na Matangazo</h2>
+    <div class="newsList">
+      <article class="newsCard">
+        <div class="newsDate">ML CHRISTIAN RADIO</div>
+        <h2>Karibu kwenye ukurasa wa Taarifa</h2>
+        <p>Ukurasa huu umetengenezwa kwa ajili ya kuchapisha taarifa mpya za ML Christian Radio – Home of Champions.</p>
+      </article>
+      <article class="newsCard">
+        <div class="newsDate">RADIO 24/7</div>
+        <h2>Sikiliza ML Christian Radio Online</h2>
+        <p>Ungana nasi kwa vipindi vya Injili, mahubiri, mafundisho, Gospel music na ibada kupitia radio yetu ya mtandaoni.</p>
+        <a class="btn gold" href="index.html#listen">▶ Listen Live</a>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">© <span id="year"></span> ML Christian Media · ML Christian Radio – Home of Champions</div></footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const menu=document.querySelector('.menu'), nav=document.querySelector('.nav');
+if(menu) menu.addEventListener('click',()=>nav.classList.toggle('open'));
+</script>
+</body>
+</html>
