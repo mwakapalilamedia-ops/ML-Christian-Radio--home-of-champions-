@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mwakapalilamedia-ops.github.io/ML-Christian-Radio--home-of-champions-/sitemap.xml
