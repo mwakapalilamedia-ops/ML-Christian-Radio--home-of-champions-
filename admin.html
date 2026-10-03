@@ -16,7 +16,7 @@
 <div class="top"><div><label>ML CHRISTIAN RADIO</label><h1>Post Taarifa</h1></div><a href="news.html">Tazama Taarifa</a></div>
 <div class="box">
 <div class="help"><b>Muhimu:</b> GitHub Pages ni static. Ukurasa huu unatumia GitHub API kuchapisha <b>posts.json</b>. Token yako haijawekwa kwenye website; inatumika kwenye browser yako pekee. Tumia <b>Fine-grained Personal Access Token</b> yenye ruhusa ya <b>Contents: Read and write</b> kwenye repository hii pekee, na usimpe mtu mwingine.</div>
-<div class="field"><label>GitHub Personal Access Token</label><input id="token" type="password" autocomplete="off" placeholder="ghp_... au github_pat_..."></div>
+<div class="field"><label>GitHub Personal Access Token</label><input id="token" type="password" autocomplete="off" placeholder="github_pat_..."></div>
 <div class="field"><label>Kichwa cha Taarifa</label><input id="title" placeholder="Mfano: ML Christian Radio yazindua kipindi kipya"></div>
 <div class="field"><label>Category</label><input id="category" placeholder="HABARI / MATANGAZO / RADIO"></div>
 <div class="field"><label>Maelezo mafupi</label><textarea id="excerpt" style="min-height:90px" placeholder="Maelezo yatakayoonekana kwenye kadi ya taarifa..."></textarea></div>
@@ -32,19 +32,19 @@ function status(msg,ok){const s=$("status");s.textContent=msg;s.className="statu
 $("publish").addEventListener("click",async()=>{
   const token=$("token").value.trim(), title=$("title").value.trim(), excerpt=$("excerpt").value.trim(), content=$("content").value.trim(), category=$("category").value.trim()||"TAARIFA", image=$("image").value.trim();
   if(!token||!title||!excerpt||!content){status("Jaza Token, Kichwa, Maelezo mafupi na Taarifa kamili.",false);return}
-  const btn=$("publish");btn.disabled=true;btn.textContent="Inachapisha...";
+  const btn=$("publish");btn.disabled=true;btn.textContent="Inachapisha...";status("Inaangalia ruhusa za GitHub...",true);
   try{
     const headers={Authorization:"Bearer "+token,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
     const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
-    const get=await fetch(url,{headers}); if(!get.ok) throw new Error("GitHub haijakubali token au faili.");
+    const repoCheck=await fetch(`https://api.github.com/repos/${owner}/${repo}`,{headers}); if(!repoCheck.ok){const e=await repoCheck.json().catch(()=>({}));throw new Error("Token haijaidhinishwa: "+(e.message||"hakuna ruhusa."));} const get=await fetch(url,{headers}); if(!get.ok){const e=await get.json().catch(()=>({}));throw new Error("Imeshindwa kusoma posts.json: "+(e.message||"unknown error"));}
     const current=await get.json();
     const bytes=Uint8Array.from(atob(current.content.replace(/\n/g,"")),c=>c.charCodeAt(0));
     const json=JSON.parse(new TextDecoder().decode(bytes));
     json.unshift({id:Date.now().toString(),title,date:new Date().toISOString().slice(0,10),category,excerpt,content,image});
     const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(json,null,2))));
     const put=await fetch(url,{method:"PUT",headers,"body":JSON.stringify({message:"Publish taarifa: "+title,content:encoded,sha:current.sha,branch})});
-    if(!put.ok){const e=await put.json();throw new Error(e.message||"Publish imeshindikana.")}
-    status("Imechapishwa! Taarifa itaonekana kwenye Taarifa baada ya GitHub Pages kusasisha website.",true);
+    if(!put.ok){const e=await put.json();throw new Error("Publish imeshindikana: "+(e.message||"Token haina Contents: Read and write."))}
+    status("✓ Imechapishwa! Taarifa imeongezwa kwenye posts.json. Subiri takriban dakika 1–3 kisha fungua Taarifa hapa: https://mwakapalilamedia-ops.github.io/ML-Christian-Radio--home-of-champions-/news.html",true);
     $("title").value="";$("category").value="";$("excerpt").value="";$("content").value="";$("image").value="";
   }catch(e){status(e.message,false)}
   btn.disabled=false;btn.textContent="📢 Publish Taarifa";
