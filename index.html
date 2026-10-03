@@ -59,7 +59,7 @@
     </a>
     <button class="menu" aria-label="Fungua menyu">☰</button>
     <nav>
-      <a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#programs">Huduma Zetu</a><a href="news.html">Taarifa</a>
+      <a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#programs">Huduma Zetu</a><a href="#news">Taarifa & Matangazo</a>
       <a href="#listen">Listen Live</a><a href="#contact">Mawasiliano</a>
       <button class="navJoin" type="button" data-open-membership>Jiunge</button>
     </nav>
@@ -132,6 +132,54 @@
     <a href="#contact">💬 <b>Contact</b><small>WhatsApp & mawasiliano</small></a>
   </div>
 </section>
+
+<section class="section frontNews" id="news">
+  <div class="wrap">
+    <div class="frontNewsHead">
+      <div>
+        <label>TAARIFA & MATANGAZO</label>
+        <h2>Habari Mpya kutoka ML Christian Radio</h2>
+        <p>Angalia taarifa, matangazo, nafasi, matukio na habari muhimu za ML Christian Radio – Home of Champions.</p>
+      </div>
+      <a class="btn gold" href="news.html">Tazama Taarifa Zote →</a>
+    </div>
+    <div id="frontNewsList" class="frontNewsGrid">
+      <article class="newsLoading">Inapakia taarifa mpya...</article>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const box = document.getElementById('frontNewsList');
+  if(!box) return;
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s]));
+  fetch('posts.json?front=' + Date.now())
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('Posts unavailable')))
+    .then(posts => {
+      const latest = Array.isArray(posts) ? posts.slice(0,3) : [];
+      if(!latest.length){
+        box.innerHTML = '<article class="newsLoading">Bado hakuna taarifa mpya.</article>';
+        return;
+      }
+      box.innerHTML = latest.map(post => {
+        const image = post.image ? '<img src="' + esc(post.image) + '" alt="' + esc(post.title) + '">' : '';
+        return '<article class="frontNewsCard">' +
+          (image ? '<div class="frontNewsImage">' + image + '</div>' : '') +
+          '<div class="frontNewsBody">' +
+          '<span class="frontNewsCat">' + esc(post.category || 'TAARIFA') + '</span>' +
+          '<h3>' + esc(post.title || 'Taarifa') + '</h3>' +
+          '<time datetime="' + esc(post.date || '') + '">' + esc(post.date || '') + '</time>' +
+          '<p>' + esc(post.excerpt || post.content || '') + '</p>' +
+          '<a href="news.html">Soma zaidi →</a>' +
+          '</div></article>';
+      }).join('');
+    })
+    .catch(() => {
+      box.innerHTML = '<article class="newsLoading">Taarifa zitapatikana kwenye ukurasa wa Taarifa.</article>';
+    });
+})();
+</script>
 
 <section class="section" id="about">
   <div class="wrap two">
