@@ -181,6 +181,20 @@
 })();
 </script>
 
+
+<section class="section adGallerySection" id="matangazo-picha">
+<div class="wrap">
+<div class="adGalleryHeading"><div><label>PICHA ZA MATANGAZO</label><h2>Matangazo na Matukio</h2><p>Matangazo ya ML Christian Radio, makanisa, biashara na matukio.</p></div><div class="adGalleryControls"><button type="button" id="adPrev" aria-label="Tangazo lililotangulia">‹</button><button type="button" id="adNext" aria-label="Tangazo linalofuata">›</button></div></div>
+<div class="adCarousel" aria-label="Picha za matangazo">
+<a class="adSlide active" href="images/ads/advert-1.jpg" target="_blank" rel="noopener"><img src="images/ads/advert-1.jpg" alt="Tangazo la kwanza" loading="lazy"><span class="adSlideCaption"><b>Matangazo ya ML Christian Radio</b><small>Picha hubadilika kila sekunde 5</small></span></a>
+<a class="adSlide" href="images/ads/advert-2.jpg" target="_blank" rel="noopener"><img src="images/ads/advert-2.jpg" alt="Tangazo la pili" loading="lazy"><span class="adSlideCaption"><b>Matangazo na Matukio</b><small>Ongeza picha ya tangazo la pili</small></span></a>
+<a class="adSlide" href="images/ads/advert-3.jpg" target="_blank" rel="noopener"><img src="images/ads/advert-3.jpg" alt="Tangazo la tatu" loading="lazy"><span class="adSlideCaption"><b>Shirikiana nasi</b><small>Ongeza picha ya tangazo la tatu</small></span></a>
+</div><div class="adDots" id="adDots"></div><p class="adGalleryHint">Pakia picha zenye majina <code>advert-1.jpg</code>, <code>advert-2.jpg</code> na <code>advert-3.jpg</code> ndani ya folda <code>images/ads/</code> kwenye GitHub.</p>
+</div></section>
+<script>
+(function(){const slides=[...document.querySelectorAll('.adSlide')],box=document.getElementById('adDots'),prev=document.getElementById('adPrev'),next=document.getElementById('adNext');if(!slides.length||!box)return;let n=0,t;slides.forEach((s,i)=>{s.querySelector('img').addEventListener('error',()=>s.classList.add('adMissing'));const d=document.createElement('button');d.type='button';d.className='adDot'+(!i?' active':'');d.setAttribute('aria-label','Onyesha tangazo '+(i+1));d.onclick=()=>show(i,true);box.appendChild(d)});const dots=[...box.children];function show(i,reset){n=(i+slides.length)%slides.length;slides.forEach((s,j)=>{s.classList.toggle('active',j===n);s.setAttribute('aria-hidden',j!==n)});dots.forEach((d,j)=>d.classList.toggle('active',j===n));if(reset)start()}function start(){clearInterval(t);t=setInterval(()=>show(n+1,false),5000)}prev.onclick=()=>show(n-1,true);next.onclick=()=>show(n+1,true);const c=document.querySelector('.adCarousel');c.onmouseenter=()=>clearInterval(t);c.onmouseleave=start;c.onfocusin=()=>clearInterval(t);c.onfocusout=start;start()})();
+</script>
+
 <section class="section" id="about">
   <div class="wrap two">
     <div>
