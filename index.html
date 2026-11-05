@@ -211,7 +211,7 @@
     });
     const slides=[...carousel.querySelectorAll('.adSlide')],dots=[...dotsBox.children],prev=document.getElementById('adPrev'),next=document.getElementById('adNext');let current=0,timer;
     function show(index,reset){current=(index+slides.length)%slides.length;slides.forEach((s,j)=>{s.classList.toggle('active',j===current);s.setAttribute('aria-hidden',j!==current)});dots.forEach((d,j)=>d.classList.toggle('active',j===current));if(reset)start()}
-    function start(){clearInterval(timer);if(slides.length>1)timer=setInterval(()=>show(current+1,false),5000)}
+    function start(){clearInterval(timer);if(slides.length>1)timer=setInterval(()=>show(current+1,false),20000)}
     prev.hidden=next.hidden=slides.length<2;prev.onclick=()=>show(current-1,true);next.onclick=()=>show(current+1,true);
     carousel.onmouseenter=()=>clearInterval(timer);carousel.onmouseleave=start;carousel.onfocusin=()=>clearInterval(timer);carousel.onfocusout=start;start();
   }catch(error){carousel.innerHTML='<div class="newsLoading">Picha za matangazo hazikuweza kupakiwa. Jaribu tena baadaye.</div>';}
