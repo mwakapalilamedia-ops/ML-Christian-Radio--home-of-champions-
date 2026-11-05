@@ -29,6 +29,17 @@
 <div class="top"><div><h2>Manage Posts</h2><p style="color:#718096;margin:0">Hariri au futa taarifa zilizochapishwa.</p></div><button id="loadPosts" class="btn" style="background:#0b213c;color:white">🔄 Pakia Taarifa</button></div>
 <div id="postsStatus" class="status"></div>
 <div id="postsList" style="display:grid;gap:12px"></div>
+<hr style="border:0;border-top:1px solid #e6e0d4;margin:30px 0">
+<section aria-labelledby="adUploadTitle">
+  <h2 id="adUploadTitle">🖼️ Simamia Picha za Matangazo</h2>
+  <p style="color:#718096">Chagua picha moja au nyingi kutoka kwenye simu/kompyuta. Zitapakiwa moja kwa moja kwenye folda <b>images/ads/</b> na kuonekana kwenye website.</p>
+  <div class="field"><label>Jina la tangazo (hiari)</label><input id="adCaption" placeholder="Mfano: Mkutano wa Injili"></div>
+  <div class="field"><label>Chagua picha (JPG, PNG au WEBP)</label><input id="adFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>
+  <button id="uploadAds" class="btn gold" type="button">⬆️ Pakia Picha za Matangazo</button>
+  <div id="adStatus" class="status" role="status" aria-live="polite"></div>
+  <h3 style="margin-top:24px">Picha zilizopo kwenye matangazo</h3>
+  <div id="adList" style="display:grid;gap:10px"></div>
+</section>
 </div></main>
 <script>
 const owner="mwakapalilamedia-ops", repo="ML-Christian-Radio--home-of-champions-", path="posts.json", branch="main";
@@ -123,6 +134,79 @@ $("publish").addEventListener("click",async()=>{
   }catch(e){status(e.message,false)}
   btn.disabled=false;btn.textContent=editingId?"💾 Hifadhi Mabadiliko":"📢 Publish Taarifa";
 });
+
+async function readAds(token){
+  const res=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/ads.json?ref=${branch}`,{headers:apiHeaders(token)});
+  if(res.status===404)return {ads:[],sha:null};
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||"Imeshindwa kusoma ads.json.");}
+  const file=await res.json();return {ads:decodeContent(file.content),sha:file.sha};
+}
+async function saveAds(token,ads,sha){
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(ads,null,2))));
+  const body={message:"Update image advertisements",content:encoded,branch};
+  if(sha)body.sha=sha;
+  const res=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/ads.json`,{method:"PUT",headers:apiHeaders(token),body:JSON.stringify(body)});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||"Picha imepakiwa lakini orodha ya matangazo haijahifadhiwa.");}
+}
+function showAdStatus(message,ok){
+  const el=$("adStatus");el.textContent=message;el.className="status show "+(ok?"success":"error");
+}
+async function loadAds(){
+  const token=$("token").value.trim();if(!token)return;
+  try{
+    const {ads}=await readAds(token),list=$("adList");list.innerHTML="";
+    if(!ads.length){list.textContent="Bado hakuna picha za matangazo.";return;}
+    ads.forEach(ad=>{
+      const row=document.createElement("div");row.style.cssText="display:flex;align-items:center;gap:12px;border:1px solid #e6e0d4;border-radius:12px;padding:10px;background:#fff";
+      const img=document.createElement("img");img.src=ad.image;img.alt=ad.title||"Tangazo";img.style.cssText="width:82px;height:65px;object-fit:cover;border-radius:8px";
+      const info=document.createElement("div");info.style.cssText="min-width:0;overflow-wrap:anywhere";
+      const title=document.createElement("b");title.textContent=ad.title||"Tangazo";
+      const path=document.createElement("small");path.style.cssText="display:block;color:#718096";path.textContent=ad.image;
+      info.append(title,path);row.append(img,info);list.append(row);
+    });
+  }catch(e){$("adList").textContent=e.message;}
+}
+function fileAsBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(String(reader.result).split(",")[1]);
+    reader.onerror=()=>reject(new Error("Imeshindwa kusoma picha: "+file.name));
+    reader.readAsDataURL(file);
+  });
+}
+$("uploadAds").addEventListener("click",async()=>{
+  const token=$("token").value.trim(),files=[...($("adFiles").files||[])],caption=$("adCaption").value.trim();
+  if(!token){showAdStatus("Weka GitHub Personal Access Token hapo juu kwanza.",false);return;}
+  if(!files.length){showAdStatus("Chagua angalau picha moja kwanza.",false);return;}
+  if(files.some(f=>!/^image\/(jpeg|png|webp)$/.test(f.type))){showAdStatus("Tumia picha za JPG, PNG au WEBP pekee.",false);return;}
+  if(files.some(f=>f.size>10*1024*1024)){showAdStatus("Kila picha iwe chini ya MB 10.",false);return;}
+  const button=$("uploadAds");button.disabled=true;
+  try{
+    let completed=0;
+    for(const file of files){
+      showAdStatus("Inapakia "+file.name+" ("+(completed+1)+"/"+files.length+")...",true);
+      const safeName=file.name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/^-+|-+$/g,"")||"tangazo";
+      const path="images/ads/"+Date.now()+"-"+safeName;
+      const content=await fileAsBase64(file);
+      const upload=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}`,{
+        method:"PUT",headers:apiHeaders(token),
+        body:JSON.stringify({message:"Upload image advertisement: "+safeName,content,branch})
+      });
+      if(!upload.ok){const e=await upload.json().catch(()=>({}));throw new Error(e.message||"Imeshindwa kupakia "+file.name);}
+      const adsData=await readAds(token);
+      const title=caption||(file.name.replace(/\.[^.]+$/,"").replace(/[-_]+/g," "));
+      adsData.ads.unshift({id:Date.now().toString(),image:path,title});
+      await saveAds(token,adsData.ads,adsData.sha);
+      completed++;
+    }
+    $("adFiles").value="";$("adCaption").value="";
+    showAdStatus("✓ Picha "+completed+" zimepakiwa na kuongezwa kwenye matangazo ya website. Subiri kidogo kisha fungua website upya.",true);
+    await loadAds();
+  }catch(e){showAdStatus(e.message,false);await loadAds();}
+  button.disabled=false;
+});
+$("token").addEventListener("change",loadAds);
+
 </script>
 </body>
 </html>
