@@ -67,6 +67,42 @@
 </header>
 
 <main id="home">
+<section class="section adGallerySection" id="matangazo-picha">
+<div class="wrap">
+<div class="adGalleryHeading"><div><label>PICHA ZA MATANGAZO</label><h2>Matangazo na Matukio</h2><p>Matangazo ya ML Christian Radio, makanisa, biashara na matukio.</p></div><div class="adGalleryControls"><button type="button" id="adPrev" aria-label="Tangazo lililotangulia">‹</button><button type="button" id="adNext" aria-label="Tangazo linalofuata">›</button></div></div>
+<div class="adCarousel" id="adCarousel" aria-label="Picha za matangazo"><div class="newsLoading">Inapakia picha za matangazo...</div></div>
+<div class="adDots" id="adDots"></div>
+<p class="adGalleryHint">Picha mpya zinazoingizwa kupitia ukurasa wa Admin zitaonekana hapa moja kwa moja.</p>
+</div></section>
+<script>
+(async function(){
+  const carousel=document.getElementById('adCarousel'),dotsBox=document.getElementById('adDots');
+  if(!carousel||!dotsBox)return;
+  try{
+    const response=await fetch('ads.json?v='+Date.now(),{cache:'no-store'});
+    if(!response.ok)throw new Error('ads.json haijapatikana');
+    const ads=await response.json();
+    if(!Array.isArray(ads)||!ads.length){carousel.innerHTML='<div class="newsLoading">Bado hakuna picha za matangazo.</div>';return;}
+    carousel.innerHTML='';
+    ads.forEach((ad,index)=>{
+      const slide=document.createElement('a');slide.className='adSlide'+(index===0?' active':'');slide.href=ad.image;slide.target='_blank';slide.rel='noopener';
+      const img=document.createElement('img');img.src=ad.image;img.alt=ad.title||('Tangazo '+(index+1));img.loading=index===0?'eager':'lazy';if(index===0)img.fetchPriority='high';
+      img.addEventListener('error',()=>slide.classList.add('adMissing'));
+      const caption=document.createElement('span');caption.className='adSlideCaption';
+      const title=document.createElement('b');title.textContent=ad.title||('Tangazo '+(index+1));
+      const sub=document.createElement('small');sub.textContent='Bonyeza picha kuiona kwa ukubwa';
+      caption.append(title,sub);slide.append(img,caption);carousel.appendChild(slide);
+      const dot=document.createElement('button');dot.type='button';dot.className='adDot'+(index===0?' active':'');dot.setAttribute('aria-label','Onyesha tangazo '+(index+1));dot.addEventListener('click',()=>show(index,true));dotsBox.appendChild(dot);
+    });
+    const slides=[...carousel.querySelectorAll('.adSlide')],dots=[...dotsBox.children],prev=document.getElementById('adPrev'),next=document.getElementById('adNext');let current=0,timer;
+    function show(index,reset){current=(index+slides.length)%slides.length;slides.forEach((s,j)=>{s.classList.toggle('active',j===current);s.setAttribute('aria-hidden',j!==current)});dots.forEach((d,j)=>d.classList.toggle('active',j===current));if(reset)start()}
+    function start(){clearInterval(timer);if(slides.length>1)timer=setInterval(()=>show(current+1,false),20000)}
+    prev.hidden=next.hidden=slides.length<2;prev.onclick=()=>show(current-1,true);next.onclick=()=>show(current+1,true);
+    carousel.onmouseenter=()=>clearInterval(timer);carousel.onmouseleave=start;carousel.onfocusin=()=>clearInterval(timer);carousel.onfocusout=start;start();
+  }catch(error){carousel.innerHTML='<div class="newsLoading">Picha za matangazo hazikuweza kupakiwa. Jaribu tena baadaye.</div>';}
+})();
+</script>
+
 <section class="hero">
   <div class="heroShade"></div>
   <div class="wrap heroContent">
@@ -182,41 +218,7 @@
 </script>
 
 
-<section class="section adGallerySection" id="matangazo-picha">
-<div class="wrap">
-<div class="adGalleryHeading"><div><label>PICHA ZA MATANGAZO</label><h2>Matangazo na Matukio</h2><p>Matangazo ya ML Christian Radio, makanisa, biashara na matukio.</p></div><div class="adGalleryControls"><button type="button" id="adPrev" aria-label="Tangazo lililotangulia">‹</button><button type="button" id="adNext" aria-label="Tangazo linalofuata">›</button></div></div>
-<div class="adCarousel" id="adCarousel" aria-label="Picha za matangazo"><div class="newsLoading">Inapakia picha za matangazo...</div></div>
-<div class="adDots" id="adDots"></div>
-<p class="adGalleryHint">Picha mpya zinazoingizwa kupitia ukurasa wa Admin zitaonekana hapa moja kwa moja.</p>
-</div></section>
-<script>
-(async function(){
-  const carousel=document.getElementById('adCarousel'),dotsBox=document.getElementById('adDots');
-  if(!carousel||!dotsBox)return;
-  try{
-    const response=await fetch('ads.json?v='+Date.now(),{cache:'no-store'});
-    if(!response.ok)throw new Error('ads.json haijapatikana');
-    const ads=await response.json();
-    if(!Array.isArray(ads)||!ads.length){carousel.innerHTML='<div class="newsLoading">Bado hakuna picha za matangazo.</div>';return;}
-    carousel.innerHTML='';
-    ads.forEach((ad,index)=>{
-      const slide=document.createElement('a');slide.className='adSlide'+(index===0?' active':'');slide.href=ad.image;slide.target='_blank';slide.rel='noopener';
-      const img=document.createElement('img');img.src=ad.image;img.alt=ad.title||('Tangazo '+(index+1));img.loading='lazy';
-      img.addEventListener('error',()=>slide.classList.add('adMissing'));
-      const caption=document.createElement('span');caption.className='adSlideCaption';
-      const title=document.createElement('b');title.textContent=ad.title||('Tangazo '+(index+1));
-      const sub=document.createElement('small');sub.textContent='Bonyeza picha kuiona kwa ukubwa';
-      caption.append(title,sub);slide.append(img,caption);carousel.appendChild(slide);
-      const dot=document.createElement('button');dot.type='button';dot.className='adDot'+(index===0?' active':'');dot.setAttribute('aria-label','Onyesha tangazo '+(index+1));dot.addEventListener('click',()=>show(index,true));dotsBox.appendChild(dot);
-    });
-    const slides=[...carousel.querySelectorAll('.adSlide')],dots=[...dotsBox.children],prev=document.getElementById('adPrev'),next=document.getElementById('adNext');let current=0,timer;
-    function show(index,reset){current=(index+slides.length)%slides.length;slides.forEach((s,j)=>{s.classList.toggle('active',j===current);s.setAttribute('aria-hidden',j!==current)});dots.forEach((d,j)=>d.classList.toggle('active',j===current));if(reset)start()}
-    function start(){clearInterval(timer);if(slides.length>1)timer=setInterval(()=>show(current+1,false),20000)}
-    prev.hidden=next.hidden=slides.length<2;prev.onclick=()=>show(current-1,true);next.onclick=()=>show(current+1,true);
-    carousel.onmouseenter=()=>clearInterval(timer);carousel.onmouseleave=start;carousel.onfocusin=()=>clearInterval(timer);carousel.onfocusout=start;start();
-  }catch(error){carousel.innerHTML='<div class="newsLoading">Picha za matangazo hazikuweza kupakiwa. Jaribu tena baadaye.</div>';}
-})();
-</script>
+
 
 <section class="section" id="about">
   <div class="wrap two">
