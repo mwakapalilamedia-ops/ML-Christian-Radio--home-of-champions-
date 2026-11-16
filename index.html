@@ -60,7 +60,7 @@
     <button class="menu" aria-label="Fungua menyu">☰</button>
     <nav>
       <a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#programs">Huduma Zetu</a><a href="#news">Taarifa & Matangazo</a><a href="investors.html">Wawekezaji & Wafadhili</a>
-      <a href="#listen">Listen Live</a><a href="#contact">Mawasiliano</a>
+      <a href="#listen">Listen Live</a><a href="#omba-tangazo">Omba Kutangaza</a><a href="#contact">Mawasiliano</a>
       <button class="navJoin" type="button" data-open-membership>Jiunge</button>
     </nav>
   </div>
@@ -266,6 +266,100 @@
     </div>
   </div>
 </section>
+
+
+<section class="section adRequestSection" id="omba-tangazo">
+  <div class="wrap">
+    <div class="adRequestIntro">
+      <label>ADVERTISING WITH ML CHRISTIAN RADIO</label>
+      <h2>Omba Kutangaza Tangazo Lako</h2>
+      <p>Jaza fomu hii kuomba kutangaza biashara, huduma, kanisa au tukio lako kupitia ML Christian Radio. Timu yetu itawasiliana nawe kuthibitisha nafasi, gharama na masharti kabla ya tangazo kuanza.</p>
+    </div>
+    <div class="adRequestLayout">
+      <div class="adRatePanel">
+        <h3>Bei za matangazo ya sauti</h3>
+        <p class="adRateNote">Bei kwa kila spot ya tangazo.</p>
+        <div class="adRateRow"><span>Sekunde 30</span><b>TZS 5,000</b></div>
+        <div class="adRateRow"><span>Sekunde 45</span><b>TZS 7,000</b></div>
+        <div class="adRateRow"><span>Sekunde 60</span><b>TZS 10,000</b></div>
+        <h3 class="adPackageTitle">Vifurushi vya mwezi</h3>
+        <div class="adRateRow"><span>BASIC · 30s, hadi mara 3 kwa siku</span><b>TZS 250,000</b></div>
+        <div class="adRateRow"><span>STANDARD · 30s, hadi mara 5 kwa siku</span><b>TZS 450,000</b></div>
+        <div class="adRateRow"><span>PREMIUM · 60s, hadi mara 5 kwa siku</span><b>TZS 750,000</b></div>
+        <p class="adRateNote">Gharama ya kutengeneza/kuandaa tangazo (production) itajadiliwa tofauti kulingana na mahitaji. Bei na ratiba zitathibitishwa na ofisi kabla ya huduma kuanza.</p>
+      </div>
+      <form id="advertRequestForm" class="adRequestForm">
+        <h3>Fomu ya maombi ya matangazo</h3>
+        <div class="formGrid">
+          <div class="field"><label for="adOrg">Jina la kampuni / biashara / kanisa *</label><input id="adOrg" name="organization" required placeholder="Andika jina hapa"></div>
+          <div class="field"><label for="adContact">Jina la mwombaji / mtu wa mawasiliano *</label><input id="adContact" name="contact" required placeholder="Jina lako kamili"></div>
+          <div class="field"><label for="adPhone">Namba ya simu / WhatsApp *</label><input id="adPhone" name="phone" type="tel" required placeholder="07xx xxx xxx"></div>
+          <div class="field"><label for="adEmail">Barua pepe</label><input id="adEmail" name="email" type="email" placeholder="jina@example.com"></div>
+          <div class="field"><label for="adType">Aina ya tangazo *</label><select id="adType" name="type" required><option value="">Chagua aina ya tangazo</option><option>Tangazo la sauti (Radio spot)</option><option>Matangazo ya picha / banner kwenye website</option><option>Graphic / poster ya matangazo</option><option>Tangazo la tukio / tamasha</option><option>Sponsored post / chapisho maalum</option><option>Nyingine</option></select></div>
+          <div class="field"><label for="adDuration">Muda wa spot ya sauti</label><select id="adDuration" name="duration"><option value="Haijatumika">Haijatumika / si tangazo la sauti</option><option>Sekunde 30 – TZS 5,000 kwa spot</option><option>Sekunde 45 – TZS 7,000 kwa spot</option><option>Sekunde 60 – TZS 10,000 kwa spot</option></select></div>
+          <div class="field"><label for="adPackage">Kifurushi (hiari)</label><select id="adPackage" name="package"><option value="Hakuna / bado sijachagua">Hakuna / bado sijachagua</option><option>BASIC – TZS 250,000 kwa mwezi</option><option>STANDARD – TZS 450,000 kwa mwezi</option><option>PREMIUM – TZS 750,000 kwa mwezi</option><option>Nahitaji ushauri wa timu</option></select></div>
+          <div class="field"><label for="adPeriod">Muda wa kampeni *</label><input id="adPeriod" name="period" required placeholder="Mfano: wiki 2 au mwezi 1"></div>
+          <div class="field"><label for="adStart">Tarehe unayotaka kuanza</label><input id="adStart" name="start" type="date"></div>
+          <div class="field"><label for="adMaterial">Hali ya audio / picha ya tangazo</label><select id="adMaterial" name="material"><option>Nina audio/picha tayari</option><option>Nahitaji ML Christian Radio initengenezee</option><option>Nahitaji ushauri kwanza</option></select></div>
+        </div>
+        <div class="field adFullField"><label for="adDetails">Maelezo ya tangazo lako *</label><textarea id="adDetails" name="details" required rows="4" placeholder="Eleza bidhaa, huduma, tukio au ujumbe unaotaka kutangazwa..."></textarea></div>
+        <label class="check adTerms"><input id="adAgree" type="checkbox" required><span>Ninakubali kuwa tangazo litapitiwa na ML Christian Radio kabla ya kurushwa au kuchapishwa. Nimehakikisha taarifa ni za kweli na nina haki ya kutumia vifaa/nakala nitakazowasilisha.</span></label>
+        <button class="btn gold submitAdRequest" type="submit">📲 Tuma Ombi kupitia WhatsApp</button>
+        <p class="adFormFoot">Baada ya kubonyeza, WhatsApp itafunguka ikiwa na taarifa ulizojaza. Kama una audio, poster au picha, itume kama kiambatisho kwenye mazungumzo hayo. Kutuma ombi hakumaanishi tangazo limekubaliwa; tutawasiliana nawe kuthibitisha.</p>
+      </form>
+    </div>
+  </div>
+</section>
+<style>
+.adRequestSection{background:#f6f2e9}
+.adRequestIntro{max-width:780px;margin:0 auto 28px;text-align:center}
+.adRequestIntro h2{margin:8px 0 12px}
+.adRequestLayout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.4fr);gap:24px;align-items:start}
+.adRatePanel,.adRequestForm{background:#fff;border:1px solid rgba(8,21,37,.12);border-radius:18px;padding:24px;box-shadow:0 12px 32px rgba(8,21,37,.06)}
+.adRatePanel h3,.adRequestForm h3{margin:0 0 12px;color:#081525}
+.adRateNote,.adFormFoot{font-size:.9rem;line-height:1.6;color:#657080}
+.adRateRow{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #e8e8e8;font-size:.94rem}
+.adRateRow b{color:#9a711e;white-space:nowrap}
+.adPackageTitle{margin-top:24px!important}
+.adRequestForm .formGrid{margin-top:16px}
+.adRequestForm .field{min-width:0}
+.adRequestForm input,.adRequestForm select,.adRequestForm textarea{width:100%;box-sizing:border-box}
+.adFullField{margin-top:14px}
+.adRequestForm textarea{resize:vertical}
+.adTerms{margin:18px 0;align-items:flex-start}
+.adTerms input{width:auto;margin-top:4px}
+.submitAdRequest{width:100%;justify-content:center}
+.adFormFoot{margin:12px 0 0}
+@media(max-width:760px){.adRequestLayout{grid-template-columns:1fr}.adRatePanel,.adRequestForm{padding:18px}.adRateRow{font-size:.88rem}}
+</style>
+<script>
+(function(){
+ const form=document.getElementById('advertRequestForm');
+ if(!form)return;
+ form.addEventListener('submit',function(event){
+   event.preventDefault();
+   if(!form.reportValidity())return;
+   const data=new FormData(form);
+   const fields=[
+    'OMBI LA KUTANGAZA - ML CHRISTIAN RADIO',
+    'Kampuni/Biashara/Kanisa: '+(data.get('organization')||''),
+    'Mwombaji: '+(data.get('contact')||''),
+    'Simu/WhatsApp: '+(data.get('phone')||''),
+    'Barua pepe: '+(data.get('email')||'Haijatolewa'),
+    'Aina ya tangazo: '+(data.get('type')||''),
+    'Muda wa spot: '+(data.get('duration')||''),
+    'Kifurushi: '+(data.get('package')||''),
+    'Muda wa kampeni: '+(data.get('period')||''),
+    'Tarehe ya kuanza: '+(data.get('start')||'Haijatajwa'),
+    'Vifaa vya tangazo: '+(data.get('material')||''),
+    'Maelezo: '+(data.get('details')||''),
+    'Nimetuma ombi kupitia website ya ML Christian Radio.'
+   ];
+   const url='https://wa.me/255744936258?text='+encodeURIComponent(fields.join('\n'));
+   window.open(url,'_blank','noopener');
+ });
+})();
+</script>
 
 <section class="joinBand">
   <div class="wrap joinBandInner">
