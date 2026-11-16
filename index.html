@@ -304,8 +304,8 @@
         </div>
         <div class="field adFullField"><label for="adDetails">Maelezo ya tangazo lako *</label><textarea id="adDetails" name="details" required rows="4" placeholder="Eleza bidhaa, huduma, tukio au ujumbe unaotaka kutangazwa..."></textarea></div>
         <label class="check adTerms"><input id="adAgree" type="checkbox" required><span>Ninakubali kuwa tangazo litapitiwa na ML Christian Radio kabla ya kurushwa au kuchapishwa. Nimehakikisha taarifa ni za kweli na nina haki ya kutumia vifaa/nakala nitakazowasilisha.</span></label>
-        <button class="btn gold submitAdRequest" type="submit">📲 Tuma Ombi kupitia WhatsApp</button>
-        <p class="adFormFoot">Baada ya kubonyeza, WhatsApp itafunguka ikiwa na taarifa ulizojaza. Kama una audio, poster au picha, itume kama kiambatisho kwenye mazungumzo hayo. Kutuma ombi hakumaanishi tangazo limekubaliwa; tutawasiliana nawe kuthibitisha.</p>
+        <button class="btn gold submitAdRequest" type="submit">📲 Tuma Ombi WhatsApp na Email</button>
+        <p class="adFormFoot">WhatsApp itafunguka na pia programu ya barua pepe itafunguka ikiwa na taarifa ulizojaza. Bonyeza SEND/TUMA kwenye kila programu ili ombi lifike. Kama una audio, poster au picha, viambatishe kwenye WhatsApp. Kutuma ombi hakumaanishi tangazo limekubaliwa; tutawasiliana nawe kuthibitisha.</p>
       </form>
     </div>
   </div>
@@ -355,8 +355,11 @@
     'Maelezo: '+(data.get('details')||''),
     'Nimetuma ombi kupitia website ya ML Christian Radio.'
    ];
-   const url='https://wa.me/255744936258?text='+encodeURIComponent(fields.join('\n'));
-   window.open(url,'_blank','noopener');
+   const message=fields.join('\\n');
+   const whatsappUrl='https://wa.me/255744936258?text='+encodeURIComponent(message);
+   const emailUrl='mailto:mwananyamalachristianmedia@gmail.com?subject='+encodeURIComponent('Ombi la Kutangaza - ML Christian Radio')+'&body='+encodeURIComponent(message);
+   window.open(whatsappUrl,'_blank','noopener');
+   window.location.href=emailUrl;
  });
 })();
 </script>
