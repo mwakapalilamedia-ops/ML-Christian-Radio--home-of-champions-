@@ -53,6 +53,7 @@
 <body>
 <header>
   <div class="wrap nav">
+    <div class="languagePicker" aria-label="Chagua lugha"><label for="siteLanguage">Language / Lugha</label><select id="siteLanguage"><option value="sw">Kiswahili</option><option value="en">English</option></select></div>
     <a class="brand" href="#home">
       <img src="logo.svg" alt="ML Christian Radio logo">
       <span><b>ML CHRISTIAN RADIO</b><small>HOME OF CHAMPIONS</small></span>
@@ -60,7 +61,7 @@
     <button class="menu" aria-label="Fungua menyu">☰</button>
     <nav>
       <a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#programs">Huduma Zetu</a><a href="#news">Taarifa & Matangazo</a><a href="investors.html">Wawekezaji & Wafadhili</a>
-      <a href="#listen">Listen Live</a><a href="#omba-tangazo">Omba Kutangaza</a><a href="#contact">Mawasiliano</a>
+      <a href="#listen">Listen Live</a><a href="advertising.html">Matangazo Audio & Video</a><a href="#omba-tangazo">Omba Kutangaza</a><a href="#contact">Mawasiliano</a>
       <button class="navJoin" type="button" data-open-membership>Jiunge</button>
     </nav>
   </div>
@@ -411,4 +412,32 @@
 <footer><div class="wrap">© <span id="year"></span> ML Christian Media · ML Christian Radio – Home of Champions</div></footer>
 <script src="script.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v23.0"></script>
+
+<style>
+.languagePicker{display:flex;align-items:center;gap:7px;margin-left:auto;margin-right:12px;color:#fff;font-size:12px}
+.languagePicker select{background:#fff;color:#081525;border:1px solid #d4b15c;border-radius:8px;padding:7px;font-weight:600}
+@media(max-width:900px){.languagePicker{margin:8px 0 8px auto}}
+</style>
+<script>
+(function(){
+ const select=document.getElementById('siteLanguage');if(!select)return;
+ const dict={
+  'Nyumbani':'Home','Kuhusu Sisi':'About Us','Huduma Zetu':'Our Services','Taarifa & Matangazo':'News & Advertisements','Wawekezaji & Wafadhili':'Investors & Donors','Omba Kutangaza':'Advertise With Us','Mawasiliano':'Contact','Jiunge':'Join','Matangazo Audio & Video':'Audio & Video Ads','PICHA ZA MATANGAZO':'ADVERTISEMENT IMAGES','Matangazo na Matukio':'Advertisements & Events','Picha mpya zinazoingizwa kupitia ukurasa wa Admin zitaonekana hapa moja kwa moja.':'New images added through the Admin page will appear here.','Sauti ya Injili, mafundisho, mahubiri na muziki wa Gospel — online kutoka Dar es Salaam, Tanzania.':'The sound of the Gospel, teachings, sermons and Gospel music — online from Dar es Salaam, Tanzania.','Jiunge na Familia':'Join Our Family','Listen Live':'Listen Live'
+ };
+ const originals=new Map();
+ function translate(lang){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('nav a,nav button,.heroCopy p,.heroActions a,.heroActions button,.adGalleryHeading label,.adGalleryHeading h2,.adGalleryHint').forEach(el=>{
+   if(!originals.has(el))originals.set(el,el.textContent.trim());
+   const original=originals.get(el);el.textContent=lang==='en'?(dict[original]||original):original;
+  });
+  const label=document.querySelector('.languagePicker label');if(label)label.textContent=lang==='en'?'Language':'Lugha';
+  select.value=lang;
+  try{localStorage.setItem('mlcr-language',lang)}catch(e){}
+ }
+ select.addEventListener('change',()=>translate(select.value));
+ let saved='sw';try{saved=localStorage.getItem('mlcr-language')||'sw'}catch(e){}
+ translate(saved);
+})();
+</script>
 </body></html>
