@@ -283,7 +283,7 @@ $("token").addEventListener("change",loadAds);
      for(const file of files){
        msg("Inapakia "+file.name+" ("+(done+1)+"/"+files.length+")...",true);
        const form=new FormData();form.append("file",file);form.append("upload_preset",preset);form.append("folder","ml-christian-radio/"+kind);
-       const up=await fetch("https://api.cloudinary.com/v1_1/"+encodeURIComponent(cloud)+"/"+kind+"/upload",{method:"POST",body:form});
+       const up=await fetch("https://api.cloudinary.com/v1_1/"+encodeURIComponent(cloud)+"/video/upload",{method:"POST",body:form});
        const result=await up.json();if(!up.ok)throw new Error(result.error?.message||"Cloudinary imeshindwa kupakia "+file.name);
        const data=await readList(kind);
        const label=titleEl.value.trim()||(file.name.replace(/\.[^.]+$/,"").replace(/[-_]+/g," "));
