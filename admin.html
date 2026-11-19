@@ -208,5 +208,98 @@ $("uploadAds").addEventListener("click",async()=>{
 $("token").addEventListener("change",loadAds);
 
 </script>
+
+<hr style="border:0;border-top:1px solid #e6e0d4;margin:30px 0">
+<section id="cloudMediaManager">
+  <h2>☁️ Video na Audio — Cloudinary</h2>
+  <p style="color:#718096;line-height:1.6">Pakia video na audio kwenye Cloudinary. Viungo vitawekwa kwenye website kupitia videos.json na audio.json. Jaza Cloud Name na Upload Preset mara ya kwanza.</p>
+  <div class="field"><label>Cloudinary Cloud Name</label><input id="cloudName" placeholder="Mfano: dxxxxxxxxx"></div>
+  <div class="field"><label>Unsigned Upload Preset</label><input id="cloudPreset" placeholder="Mfano: mlradio_upload"></div>
+  <div class="field"><label>Aina ya maudhui</label><select id="mediaKind"><option value="video">Video</option><option value="audio">Audio</option></select></div>
+  <div class="field"><label>Kichwa / Jina la maudhui</label><input id="mediaTitle" placeholder="Mfano: Mahubiri ya Jumapili"></div>
+  <div class="field"><label>Maelezo mafupi (hiari)</label><textarea id="mediaDescription" rows="2" placeholder="Maelezo ya video au audio..."></textarea></div>
+  <div class="field"><label>Chagua mafaili (video MP4/MOV; audio MP3/M4A/WAV)</label><input id="mediaFiles" type="file" accept="video/mp4,video/quicktime,audio/mpeg,audio/mp4,audio/wav,audio/x-wav,audio/aac" multiple></div>
+  <button id="uploadMedia" type="button" class="btn gold">⬆️ Pakia Video / Audio</button>
+  <div id="mediaStatus" class="status" role="status" aria-live="polite"></div>
+  <h3 style="margin-top:24px">Video zilizopakiwa</h3><div id="videoAdminList" style="display:grid;gap:10px"></div>
+  <h3 style="margin-top:24px">Audio zilizopakiwa</h3><div id="audioAdminList" style="display:grid;gap:10px"></div>
+  <p style="font-size:12px;color:#718096;line-height:1.5">Kumbuka: Kitufe cha Futa kinaondoa maudhui kwenye orodha ya website tu. Kufuta faili lenyewe Cloudinary kunahitaji API ya upande wa server; hatuweki API Secret kwenye website.</p>
+</section>
+<script>
+(function(){
+ const cloudNameEl=document.getElementById("cloudName"),presetEl=document.getElementById("cloudPreset");
+ const kindEl=document.getElementById("mediaKind"),filesEl=document.getElementById("mediaFiles");
+ const titleEl=document.getElementById("mediaTitle"),descEl=document.getElementById("mediaDescription");
+ const btn=document.getElementById("uploadMedia"),statusEl=document.getElementById("mediaStatus");
+ try{cloudNameEl.value=localStorage.getItem("mlcr-cloud-name")||"";presetEl.value=localStorage.getItem("mlcr-cloud-preset")||"";}catch(e){}
+ function msg(t,ok){statusEl.textContent=t;statusEl.className="status show "+(ok?"success":"error");}
+ function decode(b){const bytes=Uint8Array.from(atob(b.replace(/\n/g,"")),c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}
+ function headers(){return {Authorization:"Bearer "+document.getElementById("token").value.trim(),Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};}
+ async function readList(kind){
+   const path=kind==="video"?"videos.json":"audio.json";
+   const r=await fetch("https://api.github.com/repos/mwakapalilamedia-ops/ML-Christian-Radio--home-of-champions-/contents/"+path+"?ref=main",{headers:headers()});
+   if(r.status===404)return {items:[],sha:null,path};
+   if(!r.ok)throw new Error("Imeshindwa kusoma "+path+". Hakikisha GitHub Token ina ruhusa Contents: Read and write.");
+   const f=await r.json();return {items:decode(f.content),sha:f.sha,path};
+ }
+ async function saveList(data,items,kind){
+   const content=btoa(unescape(encodeURIComponent(JSON.stringify(items,null,2))));
+   const body={message:"Update "+kind+" media library",content,branch:"main"};if(data.sha)body.sha=data.sha;
+   const r=await fetch("https://api.github.com/repos/mwakapalilamedia-ops/ML-Christian-Radio--home-of-champions-/contents/"+data.path,{method:"PUT",headers:headers(),body:JSON.stringify(body)});
+   if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.message||"Imeshindwa kuhifadhi orodha ya "+kind+".");}
+ }
+ async function refreshLists(){
+   const token=document.getElementById("token").value.trim();if(!token)return;
+   for(const kind of ["video","audio"]){
+     const data=await readList(kind),box=document.getElementById(kind==="video"?"videoAdminList":"audioAdminList");box.innerHTML="";
+     if(!data.items.length){box.textContent="Bado hakuna "+(kind==="video"?"video":"audio")+".";
+       continue;}
+     data.items.forEach(item=>{
+       const row=document.createElement("div");row.style.cssText="display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #e6e0d4;border-radius:12px;padding:12px;background:#fff";
+       const info=document.createElement("div");info.style.cssText="min-width:0;overflow-wrap:anywhere";
+       const name=document.createElement("b");name.textContent=item.title||item.filename||kind;
+       const url=document.createElement("small");url.style.cssText="display:block;color:#718096";url.textContent=item.format?("."+item.format):item.url;
+       info.append(name,url);
+       const del=document.createElement("button");del.type="button";del.className="btn";del.textContent="Ondoa";del.style.cssText="background:#ffe9e9;color:#8a2222;margin:0";
+       del.addEventListener("click",()=>removeItem(kind,item.id));row.append(info,del);box.append(row);
+     });
+   }
+ }
+ async function removeItem(kind,id){
+   if(!confirm("Ondoa maudhui haya kwenye website? Faili lenyewe litabaki Cloudinary."))return;
+   try{const data=await readList(kind);const items=data.items.filter(x=>String(x.id)!==String(id));await saveList(data,items,kind);msg("Maudhui yameondolewa kwenye website.",true);await refreshLists();}
+   catch(e){msg(e.message,false);}
+ }
+ btn.addEventListener("click",async()=>{
+   const token=document.getElementById("token").value.trim(),cloud=cloudNameEl.value.trim(),preset=presetEl.value.trim(),files=[...(filesEl.files||[])],kind=kindEl.value;
+   if(!token){msg("Weka GitHub Token hapo juu kwanza.",false);return;}
+   if(!cloud||!preset){msg("Jaza Cloudinary Cloud Name na Unsigned Upload Preset.",false);return;}
+   if(!files.length){msg("Chagua angalau faili moja.",false);return;}
+   if(kind==="video"&&files.some(f=>!/^video\/(mp4|quicktime)$/.test(f.type))){msg("Kwa sasa chagua video za MP4 au MOV pekee.",false);return;}
+   if(kind==="audio"&&files.some(f=>!/^audio\/(mpeg|mp4|wav|x-wav|aac)$/.test(f.type))){msg("Chagua audio za MP3, M4A, WAV au AAC.",false);return;}
+   try{localStorage.setItem("mlcr-cloud-name",cloud);localStorage.setItem("mlcr-cloud-preset",preset);}catch(e){}
+   btn.disabled=true;let done=0;
+   try{
+     for(const file of files){
+       msg("Inapakia "+file.name+" ("+(done+1)+"/"+files.length+")...",true);
+       const form=new FormData();form.append("file",file);form.append("upload_preset",preset);form.append("folder","ml-christian-radio/"+kind);
+       const up=await fetch("https://api.cloudinary.com/v1_1/"+encodeURIComponent(cloud)+"/"+kind+"/upload",{method:"POST",body:form});
+       const result=await up.json();if(!up.ok)throw new Error(result.error?.message||"Cloudinary imeshindwa kupakia "+file.name);
+       const data=await readList(kind);
+       const label=titleEl.value.trim()||(file.name.replace(/\.[^.]+$/,"").replace(/[-_]+/g," "));
+       data.items.unshift({id:result.public_id,title:label,description:descEl.value.trim(),url:result.secure_url,public_id:result.public_id,resource_type:result.resource_type,format:result.format,duration:result.duration||null,bytes:result.bytes,created_at:new Date().toISOString()});
+       await saveList(data,data.items,kind);done++;
+     }
+     filesEl.value="";titleEl.value="";descEl.value="";
+     msg("✓ "+done+" "+(kind==="video"?"video":"audio")+" zimepakiwa na kuwekwa kwenye website. Fungua ukurasa wa Video & Audio kuona.",true);
+     await refreshLists();
+   }catch(e){msg(e.message,false);try{await refreshLists()}catch(_){}}
+   btn.disabled=false;
+ });
+ document.getElementById("token").addEventListener("change",()=>refreshLists().catch(e=>msg(e.message,false)));
+ refreshLists().catch(()=>{});
+})();
+</script>
+
 </body>
 </html>
