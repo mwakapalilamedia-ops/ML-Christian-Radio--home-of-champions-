@@ -213,8 +213,8 @@ $("token").addEventListener("change",loadAds);
 <section id="cloudMediaManager">
   <h2>☁️ Video na Audio — Cloudinary</h2>
   <p style="color:#718096;line-height:1.6">Pakia video na audio kwenye Cloudinary. Viungo vitawekwa kwenye website kupitia videos.json na audio.json. Jaza Cloud Name na Upload Preset mara ya kwanza.</p>
-  <div class="field"><label>Cloudinary Cloud Name</label><input id="cloudName" placeholder="Mfano: dxxxxxxxxx"></div>
-  <div class="field"><label>Unsigned Upload Preset</label><input id="cloudPreset" placeholder="Mfano: mlradio_upload"></div>
+  <div class="field"><label>Cloudinary Cloud Name</label><input id="cloudName" placeholder="Mfano: dxxxxxxxxx" value="azbmu35p"></div>
+  <div class="field"><label>Unsigned Upload Preset</label><input id="cloudPreset" placeholder="Mfano: mlradio_upload" value="ml-christian-radio"></div>
   <div class="field"><label>Aina ya maudhui</label><select id="mediaKind"><option value="video">Video</option><option value="audio">Audio</option></select></div>
   <div class="field"><label>Kichwa / Jina la maudhui</label><input id="mediaTitle" placeholder="Mfano: Mahubiri ya Jumapili"></div>
   <div class="field"><label>Maelezo mafupi (hiari)</label><textarea id="mediaDescription" rows="2" placeholder="Maelezo ya video au audio..."></textarea></div>
@@ -231,7 +231,7 @@ $("token").addEventListener("change",loadAds);
  const kindEl=document.getElementById("mediaKind"),filesEl=document.getElementById("mediaFiles");
  const titleEl=document.getElementById("mediaTitle"),descEl=document.getElementById("mediaDescription");
  const btn=document.getElementById("uploadMedia"),statusEl=document.getElementById("mediaStatus");
- try{cloudNameEl.value=localStorage.getItem("mlcr-cloud-name")||"";presetEl.value=localStorage.getItem("mlcr-cloud-preset")||"";}catch(e){}
+ try{cloudNameEl.value=localStorage.getItem("mlcr-cloud-name")||"azbmu35p";presetEl.value=localStorage.getItem("mlcr-cloud-preset")||"ml-christian-radio";}catch(e){}
  function msg(t,ok){statusEl.textContent=t;statusEl.className="status show "+(ok?"success":"error");}
  function decode(b){const bytes=Uint8Array.from(atob(b.replace(/\n/g,"")),c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}
  function headers(){return {Authorization:"Bearer "+document.getElementById("token").value.trim(),Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};}
