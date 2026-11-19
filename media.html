@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Tazama video na sikiliza audio za ML Christian Radio – Home of Champions.">
+<title>Video na Audio | ML Christian Radio</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body{background:#081525;color:#fff}.mediaWrap{max-width:1100px;margin:auto;padding:36px 20px 70px}.mediaWrap h1{font-size:clamp(30px,5vw,48px)}.mediaSection{margin-top:42px}.mediaGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.mediaItem{background:#fff;color:#081525;border-radius:16px;overflow:hidden}.mediaItem video{width:100%;aspect-ratio:16/9;background:#000;display:block}.mediaItem audio{width:calc(100% - 28px);margin:12px 14px}.mediaText{padding:14px}.mediaText h3{margin:0 0 8px}.mediaText p{color:#64748b;margin:0;line-height:1.5}.empty{padding:24px;border:1px dashed #8290a0;border-radius:14px;color:#cbd5e1}.goldText{color:#f0c45c;letter-spacing:2px;font-weight:bold}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="index.html"><img src="logo.svg" alt="ML Christian Radio logo"><span><b>ML CHRISTIAN RADIO</b><small>HOME OF CHAMPIONS</small></span></a><nav><a href="index.html">Nyumbani</a><a href="admin.html">Admin</a></nav></div></header>
+<main class="mediaWrap">
+<p class="goldText">HOME OF CHAMPIONS</p><h1>Video na Audio za ML Christian Radio</h1><p>Tazama video, mahubiri, vipindi na matangazo ya sauti yaliyowekwa na timu ya ML Christian Radio.</p>
+<section class="mediaSection"><h2>🎬 Video</h2><div id="videoList" class="mediaGrid"><div class="empty">Inapakia video...</div></div></section>
+<section class="mediaSection"><h2>🎧 Audio</h2><div id="audioList" class="mediaGrid"><div class="empty">Inapakia audio...</div></div></section>
+<p style="margin-top:40px"><a href="index.html" style="color:#f0c45c">← Rudi mwanzo</a></p>
+</main>
+<script>
+async function loadMedia(kind){
+ const box=document.getElementById(kind+"List"),file=kind==="video"?"videos.json":"audio.json";
+ try{
+  const r=await fetch(file+"?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Bado hakuna maudhui.");
+  const items=await r.json();if(!Array.isArray(items)||!items.length){box.innerHTML='<div class="empty">Bado hakuna '+(kind==="video"?"video":"audio")+' zilizowekwa.</div>';return;}
+  box.innerHTML="";
+  items.forEach(item=>{
+   const card=document.createElement("article");card.className="mediaItem";
+   const player=document.createElement(kind==="video"?"video":"audio");
+   player.controls=true;player.preload="metadata";player.src=item.url;
+   if(kind==="video")player.playsInline=true;
+   const text=document.createElement("div");text.className="mediaText";
+   const title=document.createElement("h3");title.textContent=item.title||"ML Christian Radio";
+   text.append(title);
+   if(item.description){const desc=document.createElement("p");desc.textContent=item.description;text.append(desc);}
+   card.append(player,text);box.append(card);
+  });
+ }catch(e){box.innerHTML='<div class="empty">Maudhui hayajapatikana kwa sasa. Jaribu tena baadaye.</div>';}
+}
+loadMedia("video");loadMedia("audio");
+</script>
+</body></html>
